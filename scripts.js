@@ -1,5 +1,3 @@
-// const
-
 function createGrid(gridSize = 16) {
   const container = document.querySelector("#container");
   container.innerHTML = "";
@@ -18,26 +16,45 @@ function createGrid(gridSize = 16) {
 
     container.appendChild(row);
   }
+  addTileListener();
 }
 
 createGrid();
 
 let mouseDown = false;
-const tileList = document.querySelectorAll(".tile");
 
-tileList.forEach((tile) => {
-  tile.addEventListener("mousedown", () => {
-    mouseDown = true;
-    tile.classList.add("colored");
-  });
+function addTileListener() {
+  const tileList = document.querySelectorAll(".tile");
 
-  tile.addEventListener("mouseup", () => {
-    mouseDown = false;
-  });
-
-  tile.addEventListener("mouseover", () => {
-    if (mouseDown) {
+  tileList.forEach((tile) => {
+    tile.addEventListener("mousedown", () => {
+      mouseDown = true;
       tile.classList.add("colored");
-    }
+    });
+
+    tile.addEventListener("mouseup", () => {
+      mouseDown = false;
+    });
+
+    tile.addEventListener("mouseover", () => {
+      if (mouseDown) {
+        tile.classList.add("colored");
+      }
+    });
   });
-});
+}
+
+const DELAY_MS = 500;
+let timeoutID = null;
+
+function updateGridSize() {
+  clearTimeout(timeoutID);
+
+  const sliderValue = document.getElementById("slider").value;
+
+  document.getElementById(
+    "gridSize"
+  ).innerHTML = `Grid Size: ${sliderValue} x ${sliderValue}`;
+
+  timeoutID = setTimeout(() => createGrid(sliderValue), DELAY_MS);
+}

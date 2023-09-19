@@ -34,7 +34,10 @@ h1 {
 
 p {
   font-size: 24px;
+  font-weight: 600;
   text-align: center;
+  padding: 0;
+  margin: 0;
 }
 
 button {
@@ -52,13 +55,12 @@ button {
   border: 1px solid black;
 }
 .row {
-  /* border: 1px solid red; */
   display: flex;
   flex: 1;
 }
 
 .tile {
-  border: 0.5px solid black;
+  /* border: 0.5px solid black; */
   display: flex;
   flex: 1;
 }
