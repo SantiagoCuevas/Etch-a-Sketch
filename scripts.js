@@ -1,3 +1,5 @@
+let rainbowMode = false;
+
 function createGrid(gridSize = 16) {
   const container = document.querySelector("#container");
   container.innerHTML = "";
@@ -26,10 +28,19 @@ let mouseDown = false;
 function addTileListener() {
   const tileList = document.querySelectorAll(".tile");
 
+  let color = "";
+
   tileList.forEach((tile) => {
     tile.addEventListener("mousedown", () => {
       mouseDown = true;
-      tile.classList.add("colored");
+
+      if (rainbowMode) {
+        color = randomColor();
+      } else {
+        color = "black";
+      }
+
+      tile.style.backgroundColor = color;
     });
 
     tile.addEventListener("mouseup", () => {
@@ -37,8 +48,12 @@ function addTileListener() {
     });
 
     tile.addEventListener("mouseover", () => {
-      if (mouseDown) {
-        tile.classList.add("colored");
+      if (mouseDown && rainbowMode) {
+        color = randomColor();
+        tile.style.backgroundColor = color;
+      } else if (mouseDown && !rainbowMode) {
+        color = "black";
+        tile.style.backgroundColor = color;
       }
     });
   });
@@ -62,9 +77,29 @@ function updateGridSize() {
 const clearGridBtn = document.querySelector(".clearGrid");
 
 clearGridBtn.addEventListener("click", () => {
-  // createGrid();
-
   const tileList = document.querySelectorAll(".tile");
 
-  tileList.forEach((tile) => tile.classList.remove("colored"));
+  tileList.forEach((tile) => (tile.style.backgroundColor = ""));
+
+  // tile.classList.remove("colored"));
 });
+
+const rainbowModeBtn = document.querySelector(".rainbow");
+
+rainbowModeBtn.addEventListener("click", () => {
+  if (!rainbowMode) {
+    rainbowMode = true;
+  } else {
+    rainbowMode = false;
+  }
+});
+
+function randomColor() {
+  let r = Math.floor(Math.random() * 256);
+
+  let g = Math.floor(Math.random() * 256);
+
+  let b = Math.floor(Math.random() * 256);
+
+  return `rgb(${r}, ${g}, ${b})`;
+}

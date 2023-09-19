@@ -60,7 +60,7 @@ button {
 }
 
 .tile {
-  border: 0.5px solid black;
+  /* border: 0.5px solid black; */
   display: flex;
   flex: 1;
 }
