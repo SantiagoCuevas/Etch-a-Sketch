@@ -1,3 +1,4 @@
+const BLACK = "black";
 let rainbowMode = false;
 
 function createGrid(gridSize = 16) {
@@ -28,18 +29,11 @@ let mouseDown = false;
 function addTileListener() {
   const tileList = document.querySelectorAll(".tile");
 
-  let color = "";
-
   tileList.forEach((tile) => {
     tile.addEventListener("mousedown", () => {
       mouseDown = true;
 
-      if (rainbowMode) {
-        color = randomColor();
-      } else {
-        color = "black";
-      }
-
+      color = rainbowMode ? randomColor() : BLACK;
       tile.style.backgroundColor = color;
     });
 
@@ -48,13 +42,12 @@ function addTileListener() {
     });
 
     tile.addEventListener("mouseover", () => {
-      if (mouseDown && rainbowMode) {
-        color = randomColor();
-        tile.style.backgroundColor = color;
-      } else if (mouseDown && !rainbowMode) {
-        color = "black";
-        tile.style.backgroundColor = color;
+      if (!mouseDown) {
+        return;
       }
+
+      color = rainbowMode ? randomColor() : BLACK;
+      tile.style.backgroundColor = color;
     });
   });
 }
@@ -80,18 +73,12 @@ clearGridBtn.addEventListener("click", () => {
   const tileList = document.querySelectorAll(".tile");
 
   tileList.forEach((tile) => (tile.style.backgroundColor = ""));
-
-  // tile.classList.remove("colored"));
 });
 
 const rainbowModeBtn = document.querySelector(".rainbow");
 
 rainbowModeBtn.addEventListener("click", () => {
-  if (!rainbowMode) {
-    rainbowMode = true;
-  } else {
-    rainbowMode = false;
-  }
+  rainbowMode = !rainbowMode;
 });
 
 function randomColor() {
