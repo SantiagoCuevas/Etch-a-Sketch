@@ -58,3 +58,13 @@ function updateGridSize() {
 
   timeoutID = setTimeout(() => createGrid(sliderValue), DELAY_MS);
 }
+
+const clearGridBtn = document.querySelector(".clearGrid");
+
+clearGridBtn.addEventListener("click", () => {
+  // createGrid();
+
+  const tileList = document.querySelectorAll(".tile");
+
+  tileList.forEach((tile) => tile.classList.remove("colored"));
+});
